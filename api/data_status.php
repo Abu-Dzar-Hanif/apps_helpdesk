@@ -5,7 +5,7 @@ $respons = [];
 while($data = mysqli_fetch_array($query)){
     $a = [
         'id_sts' => $data['id_sts'],
-        'status' => $data['status'],
+        'sts' => $data['sts'],
     ];
     array_push($respons, $a);
 }

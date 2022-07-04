@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 4.9.7
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Waktu pembuatan: 11 Bulan Mei 2022 pada 09.36
--- Versi server: 10.4.21-MariaDB
--- Versi PHP: 7.4.23
+-- Host: localhost:3306
+-- Waktu pembuatan: 04 Jul 2022 pada 19.38
+-- Versi server: 10.3.34-MariaDB-cll-lve
+-- Versi PHP: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,31 +19,8 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `apps_helpdesk`
+-- Database: `uprgkylq_apps_helpdesk`
 --
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `tbl_admin`
---
-
-CREATE TABLE `tbl_admin` (
-  `id_admin` varchar(11) NOT NULL,
-  `nama` varchar(255) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `password` text NOT NULL,
-  `level` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `tbl_admin`
---
-
-INSERT INTO `tbl_admin` (`id_admin`, `nama`, `username`, `password`, `level`) VALUES
-('ADM001', 'Hanif', 'hanif', '827ccb0eea8a706c4c34a16891f84e7b', 1),
-('ADM002', 'M2V', 'm2v', '827ccb0eea8a706c4c34a16891f84e7b', 0),
-('ADM003', 'yolantod', 'yolantod', '827ccb0eea8a706c4c34a16891f84e7b', 1);
 
 -- --------------------------------------------------------
 
@@ -99,7 +77,29 @@ CREATE TABLE `tbl_pc` (
 --
 
 INSERT INTO `tbl_pc` (`id_pc`, `nama_pc`, `tipe_pc`) VALUES
-('PC001', 'PC satu', 1);
+('PC001', 'PC satu', 1),
+('PC002', 'pc 2', 2),
+('PC003', 'Mini PC', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tbl_status`
+--
+
+CREATE TABLE `tbl_status` (
+  `id_sts` int(11) NOT NULL,
+  `sts` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tbl_status`
+--
+
+INSERT INTO `tbl_status` (`id_sts`, `sts`) VALUES
+(1, 'Menunggu'),
+(2, 'Dikerjakan'),
+(3, 'Selesai');
 
 -- --------------------------------------------------------
 
@@ -121,19 +121,30 @@ INSERT INTO `tbl_teknisi` (`id_teknisi`, `nama_teknisi`, `gender_teknisi`) VALUE
 ('T001', 'M2V', 'L'),
 ('T002', 'Ammar', 'L'),
 ('T003', 'Rusman', 'L'),
-('T004', '', ''),
-('T005', '', ''),
-('T006', '', '');
+('T004', 'Abu', 'L'),
+('T005', 'asd', 'P');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tbl_tiket`
+--
+
+CREATE TABLE `tbl_tiket` (
+  `id_tiket` varchar(11) NOT NULL,
+  `id_karyawan` varchar(11) NOT NULL,
+  `nama_karyawan` varchar(50) NOT NULL,
+  `keluhan` text NOT NULL,
+  `foto` text NOT NULL,
+  `tgl_buat` date NOT NULL,
+  `tgl_selesai` date DEFAULT NULL,
+  `teknisi` varchar(11) DEFAULT NULL,
+  `status` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
 --
-
---
--- Indeks untuk tabel `tbl_admin`
---
-ALTER TABLE `tbl_admin`
-  ADD PRIMARY KEY (`id_admin`);
 
 --
 -- Indeks untuk tabel `tbl_jenis`
@@ -148,10 +159,22 @@ ALTER TABLE `tbl_pc`
   ADD PRIMARY KEY (`id_pc`);
 
 --
+-- Indeks untuk tabel `tbl_status`
+--
+ALTER TABLE `tbl_status`
+  ADD PRIMARY KEY (`id_sts`);
+
+--
 -- Indeks untuk tabel `tbl_teknisi`
 --
 ALTER TABLE `tbl_teknisi`
   ADD PRIMARY KEY (`id_teknisi`);
+
+--
+-- Indeks untuk tabel `tbl_tiket`
+--
+ALTER TABLE `tbl_tiket`
+  ADD PRIMARY KEY (`id_tiket`);
 
 --
 -- AUTO_INCREMENT untuk tabel yang dibuang
@@ -161,7 +184,13 @@ ALTER TABLE `tbl_teknisi`
 -- AUTO_INCREMENT untuk tabel `tbl_jenis`
 --
 ALTER TABLE `tbl_jenis`
-  MODIFY `id_jenis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_jenis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT untuk tabel `tbl_status`
+--
+ALTER TABLE `tbl_status`
+  MODIFY `id_sts` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,6 +1,7 @@
 <?php 
 require('../config/koneksi.php');
-$query = mysqli_query($koneksi,"SELECT * FROM tbl_tiket JOIN tbl_status ON tbl_tiket.status = tbl_status.id_sts");
+$id_karyawan = $_GET['id_karyawan'];
+$query = mysqli_query($koneksi,"SELECT * FROM tbl_tiket JOIN tbl_status ON tbl_tiket.status = tbl_status.id_sts WHERE status !=3 AND id_karyawan = '$id_karyawan'");
 $respons = [];
 while($data = mysqli_fetch_array($query)){
     $getT= mysqli_query($koneksi,"SELECT * FROM tbl_teknisi WHERE id_teknisi='$data[teknisi]'");
